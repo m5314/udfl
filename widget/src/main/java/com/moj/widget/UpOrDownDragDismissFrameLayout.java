@@ -1,4 +1,4 @@
-package com.moj.udfl;
+package com.moj.widget;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
@@ -65,7 +65,7 @@ public class UpOrDownDragDismissFrameLayout extends FrameLayout implements Neste
   }
 
   public UpOrDownDragDismissFrameLayout(Context context, AttributeSet attrs,
-										int defStyleAttr) {
+                                        int defStyleAttr) {
     super(context, attrs, defStyleAttr);
     final TypedArray a = getContext().obtainStyledAttributes(
       attrs, R.styleable.UpOrDownDragDismissFrameLayout, 0, 0);
@@ -105,7 +105,11 @@ public class UpOrDownDragDismissFrameLayout extends FrameLayout implements Neste
 
   @Override
   public void onStopNestedScroll(View child) {
+    if(totalDrag == 0){
+      return;
+    }
     Log.e("onStopNestedScView", "onStopNestedScroll");
+
     if (Math.abs(totalDrag) >= dragDismissDistance) {
       ObjectAnimator oa = ObjectAnimator.ofFloat(this, View.TRANSLATION_Y,
         getTranslationY(), totalDrag < 0 ? getHeight() : -getHeight())
